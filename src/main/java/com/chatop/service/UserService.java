@@ -32,6 +32,11 @@ public class UserService implements UserDetailsService {
         return toDTO(user);
     }
 
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        return toDTO(user);
+    }
+
     private UserDTO toDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
@@ -41,6 +46,9 @@ public class UserService implements UserDetailsService {
     }
 
     public void createUser(UserCreateDTO dto) {
+        if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cet email est déjà utilisé");
+        }
         User user = toUser(dto);
         userRepository.save(user);
     }

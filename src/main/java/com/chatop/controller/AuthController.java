@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.chatop.DTO.AuthResponseDTO;
 import com.chatop.DTO.LoginDTO;
 import com.chatop.DTO.UserCreateDTO;
+import com.chatop.DTO.UserDTO;
 import com.chatop.service.JWTService;
 import com.chatop.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+
 
 
 
@@ -52,7 +55,10 @@ public class AuthController {
         response.setToken(token);
         return ResponseEntity.ok(response);
     }
-    
-}
 
-// /api/auth/me
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> getCurrentUser(Authentication authentication) {
+        UserDTO userDTO = userService.getUserByEmail(authentication.getName());
+        return ResponseEntity.ok(userDTO);
+    }
+}
