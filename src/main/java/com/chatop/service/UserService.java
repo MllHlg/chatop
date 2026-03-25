@@ -58,6 +58,8 @@ public class UserService implements UserDetailsService {
         user.setName(dto.getName());
         user.setEmail(dto.getEmail());
         user.setPassword(bcryptPasswordEncoder.encode(dto.getPassword()));
+        user.setCreated_at(dto.getCreated_at());
+        user.setUpdated_at(dto.getUpdated_at());
         return user;
     }
 
