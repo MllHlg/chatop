@@ -42,6 +42,8 @@ public class UserService implements UserDetailsService {
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
+        dto.setCreated_at(user.getCreated_at());
+        dto.setUpdated_at(user.getUpdated_at());
         return dto;
     }
 
