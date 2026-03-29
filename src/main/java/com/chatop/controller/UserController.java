@@ -18,6 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Récupération des informations de l'utilisateur dont l'id est spécifié
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable("id") final Integer id) {
         UserDTO userDTO = userService.getUserById(id);

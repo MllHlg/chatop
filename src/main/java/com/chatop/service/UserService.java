@@ -28,12 +28,14 @@ public class UserService implements UserDetailsService {
     private BCryptPasswordEncoder bcryptPasswordEncoder;
 
     public UserDTO getUserById(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         return toDTO(user);
     }
 
     public UserDTO getUserByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
         return toDTO(user);
     }
 
@@ -67,11 +69,11 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("L'adresse email " + email + " ne correspond à aucun utilisateur"));
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new UsernameNotFoundException("L'adresse email " + email + " ne correspond à aucun utilisateur"));
         return new org.springframework.security.core.userdetails.User(
-            user.getEmail(),
-            user.getPassword(),
-            Collections.emptyList()
-        );
+                user.getEmail(),
+                user.getPassword(),
+                Collections.emptyList());
     }
 }
